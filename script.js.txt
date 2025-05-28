@@ -1,0 +1,254 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Mobile Navigation Toggle
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('.nav-links');
+    const navLinks = document.querySelectorAll('.nav-links li a'); // Target 'a' tags for click
+
+    if (burger && nav) {
+        burger.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent click from bubbling to document
+            // Toggle Nav
+            nav.classList.toggle('nav-active');
+            // Burger Animation
+            burger.classList.toggle('toggle');
+        });
+    }
+
+    // Close mobile menu when a link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (nav.classList.contains('nav-active')) {
+                nav.classList.remove('nav-active');
+                burger.classList.remove('toggle');
+            }
+        });
+    });
+
+    // Close mobile menu when clicking outside of it
+    document.addEventListener('click', (e) => {
+        if (nav && nav.classList.contains('nav-active') && !nav.contains(e.target) && !burger.contains(e.target)) {
+            nav.classList.remove('nav-active');
+            burger.classList.remove('toggle');
+        }
+    });
+
+
+    // Simple Dummy Tracking Form Handler
+    const trackingForm = document.querySelector('.tracking-form');
+    const trackingResultDiv = document.getElementById('tracking-result');
+    const trackingInput = trackingForm ? trackingForm.querySelector('input[type="text"]') : null;
+
+    if (trackingForm && trackingResultDiv && trackingInput) {
+        trackingForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent actual form submission
+            const trackingId = trackingInput.value.trim().toUpperCase(); // Standardize to uppercase
+
+            trackingResultDiv.style.display = 'none'; // Hide previous result
+            trackingResultDiv.innerHTML = ''; // Clear previous result
+
+            if (trackingId === '') {
+                trackingResultDiv.innerHTML = `<p style="color: red;">Please enter a tracking ID.</p>`;
+                trackingResultDiv.style.display = 'block';
+                return;
+            }
+
+            trackingResultDiv.innerHTML = `<p>Searching for tracking ID: <strong>${trackingId}</strong>...</p>`;
+            trackingResultDiv.style.display = 'block';
+
+            setTimeout(() => {
+                if (trackingId === "NS123456789") {
+                    trackingResultDiv.innerHTML = `
+                        <h4>Tracking Details for: ${trackingId}</h4>
+                        <p><strong>Status:</strong> In Transit</p>
+                        <p><strong>Current Location:</strong> Central Sorting Hub, London</p>
+                        <p><strong>Destination:</strong> Manchester Depot</p>
+                        <p><strong>Estimated Delivery:</strong> Tomorrow, between 10:00 AM - 02:00 PM</p>
+                    `;
+                } else if (trackingId === "NS987654321") {
+                     trackingResultDiv.innerHTML = `
+                        <h4>Tracking Details for: ${trackingId}</h4>
+                        <p><strong>Status:</strong> Delivered</p>
+                        <p><strong>Delivered To:</strong> Ms. Jane Smith</p>
+                        <p><strong>Delivery Address:</strong> 12 Park Avenue, Birmingham</p>
+                        <p><strong>Delivery Date:</strong> Yesterday, 03:15 PM</p>
+                        <p><strong>Signed by:</strong> J.Smith</p>
+                    `;
+                } else if (trackingId.startsWith("NS")) {
+                     trackingResultDiv.innerHTML = `
+                        <h4>Tracking Details for: ${trackingId}</h4>
+                        <p><strong>Status:</strong> Out for Delivery</p>
+                        <p><strong>Courier:</strong> David Miller (Van #007)</p>
+                        <p><strong>Estimated Delivery Window:</strong> Today, 01:00 PM - 05:00 PM</p>
+                    `;
+                }
+                else {
+                    trackingResultDiv.innerHTML = `<p style="color: orange;">Tracking ID <strong>${trackingId}</strong> not found. Please verify the number and try again. Ensure it starts with 'NS'.</p>`;
+                }
+                // Scroll to results if they are off-screen
+                trackingResultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 1500); // Simulate network delay
+        });
+    }
+
+    // Dummy Quote Form Handler
+    const quoteForm = document.querySelector('.quote-form');
+    const quoteResultDiv = document.getElementById('quote-result');
+
+    if (quoteForm && quoteResultDiv) {
+        quoteForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pickupPostcode = quoteForm.elements['pickup-postcode'].value.trim();
+            const deliveryPostcode = quoteForm.elements['delivery-postcode'].value.trim();
+            const parcelWeight = parseFloat(quoteForm.elements['parcel-weight'].value);
+            const serviceType = quoteForm.elements['service-type'].value;
+
+            quoteResultDiv.style.display = 'none';
+            quoteResultDiv.innerHTML = '';
+
+            if (!pickupPostcode || !deliveryPostcode || !parcelWeight) {
+                quoteResultDiv.innerHTML = `<p style="color: red;">Please fill in all required fields.</p>`;
+                quoteResultDiv.style.display = 'block';
+                return;
+            }
+            if (parcelWeight <= 0) {
+                quoteResultDiv.innerHTML = `<p style="color: red;">Parcel weight must be greater than 0.</p>`;
+                quoteResultDiv.style.display = 'block';
+                return;
+            }
+
+
+            quoteResultDiv.innerHTML = `<p>Calculating quote...</p>`;
+            quoteResultDiv.style.display = 'block';
+
+            setTimeout(() => {
+                let baseCost = 10; // Base cost in currency units
+                let weightCost = parcelWeight * 2.5;
+                let serviceMultiplier = 1;
+
+                switch(serviceType) {
+                    case 'sameday':
+                        serviceMultiplier = 2.5;
+                        baseCost += 15;
+                        break;
+                    case 'nextday':
+                        serviceMultiplier = 1;
+                        baseCost += 5;
+                        break;
+                    case 'international':
+                        serviceMultiplier = 3.5;
+                        baseCost += 25;
+                        break;
+                }
+
+                const totalCost = (baseCost + weightCost) * serviceMultiplier;
+
+                quoteResultDiv.innerHTML = `
+                    <h4>Estimated Quote:</h4>
+                    <p><strong>From:</strong> ${pickupPostcode.toUpperCase()}</p>
+                    <p><strong>To:</strong> ${deliveryPostcode.toUpperCase()}</p>
+                    <p><strong>Weight:</strong> ${parcelWeight} kg</p>
+                    <p><strong>Service:</strong> ${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}</p>
+                    <p style="font-size: 1.3em; font-weight: bold; color: #1565c0;">Estimated Cost: £${totalCost.toFixed(2)}</p>
+                    <small>This is an estimate. Actual price may vary.</small>
+                `;
+                 quoteResultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 1500);
+        });
+    }
+
+    // Dummy Contact Form Handler
+    const contactForm = document.getElementById('contact-us-form');
+    const contactFormResponseDiv = document.getElementById('contact-form-response');
+
+    if (contactForm && contactFormResponseDiv) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = contactForm.elements['contact-name'].value.trim();
+            // const email = contactForm.elements['contact-email'].value.trim();
+
+            contactFormResponseDiv.style.display = 'none';
+            contactFormResponseDiv.innerHTML = '';
+
+            if (!name) {
+                 contactFormResponseDiv.innerHTML = `<p style="color: orange;">Please enter your name.</p>`;
+                 contactFormResponseDiv.style.backgroundColor = 'rgba(255, 224, 189, 0.9)'; // Light orange
+                 contactFormResponseDiv.style.border = '1px solid orange';
+                 contactFormResponseDiv.style.display = 'block';
+                 return;
+            }
+
+            contactFormResponseDiv.innerHTML = `<p>Sending your message...</p>`;
+            contactFormResponseDiv.style.backgroundColor = 'rgba(227, 242, 253, 0.9)'; // Light blue
+            contactFormResponseDiv.style.border = '1px solid #90caf9';
+            contactFormResponseDiv.style.color = '#1a237e';
+            contactFormResponseDiv.style.display = 'block';
+
+
+            setTimeout(() => {
+                contactFormResponseDiv.innerHTML = `<p>Thank you, ${name}! Your message has been "sent". We'll get back to you shortly.</p>`;
+                contactFormResponseDiv.style.backgroundColor = 'rgba(200, 230, 201, 0.9)'; // Light green
+                contactFormResponseDiv.style.border = '1px solid #66bb6a';
+                contactFormResponseDiv.style.color = '#1b5e20';
+                contactForm.reset(); // Clear the form
+            }, 1500);
+        });
+    }
+
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                // Calculate offset for fixed header
+                const headerOffset = document.querySelector('header') ? document.querySelector('header').offsetHeight : 70;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Update active link in navigation on scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const headerHeight = document.querySelector('header') ? document.querySelector('header').offsetHeight : 70;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - headerHeight - 50; // Adjusted offset
+            if (pageYOffset >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active-link');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active-link');
+            }
+        });
+        // Handle case where no section is active (e.g. top of page before first section)
+        if (!current && navLinks.length > 0 && navLinks[0].getAttribute('href') === '#hero') {
+             const heroSection = document.getElementById('hero');
+             if (heroSection && pageYOffset < (heroSection.offsetTop + heroSection.offsetHeight - headerHeight - 50) ) {
+                navLinks[0].classList.add('active-link');
+             }
+        }
+    });
+
+
+    // Set current year in footer
+    const currentYearSpan = document.getElementById('current-year');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+    }
+
+});

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextStep Express Courier Services Ltd.</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="#" class="logo">NextStep <span class="logo-express">Express</span></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#tracking">Track Parcel</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <h1>Fast, Reliable, Nationwide</h1>
+            <h2>Your Trusted Partner for Express Courier Services</h2>
+            <p>NextStep Express delivers your parcels with speed and care. Track your shipment or get a quote today!</p>
+            <div class="hero-buttons">
+                <a href="#tracking" class="btn btn-primary">Track Your Parcel</a>
+                <a href="#quote" class="btn btn-secondary">Get a Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="tracking" class="tracking-section">
+        <div class="container">
+            <h2>Track Your Parcel</h2>
+            <p>Enter your tracking number below to see the status of your shipment.</p>
+            <form class="tracking-form">
+                <input type="text" placeholder="Enter Tracking ID (e.g., NS123456789)" required>
+                <button type="submit" class="btn btn-primary">Track Now</button>
+            </form>
+            <div id="tracking-result" class="tracking-result" style="display:none;">
+                <!-- Tracking result will be shown here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="service-grid">
+                <div class="service-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Same-Day Delivery</h3>
+                    <p>Urgent parcels delivered on the same day, reliably and swiftly across the region.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-box-open"></i>
+                    <h3>Next-Day Delivery</h3>
+                    <p>Cost-effective and dependable next-day delivery services for all your needs.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-globe-europe"></i>
+                    <h3>International Shipping</h3>
+                    <p>Expanding your reach with our secure and efficient international courier options.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-pallet"></i>
+                    <h3>Bulk & Freight</h3>
+                    <p>Specialized solutions for larger shipments, freight, and palletized goods.</p>
+                </div>
+                 <div class="service-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Delivery</h3>
+                    <p>Handling your valuable and sensitive shipments with utmost care and security.</p>
+                </div>
+                 <div class="service-item">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Our dedicated team is available around the clock to assist you with any queries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>About NextStep Express</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Founded with a vision to redefine logistics, NextStep Express Courier Services Ltd. is committed to providing fast, reliable, and secure delivery solutions. We understand the importance of your parcels, whether they are critical business documents or personal packages.</p>
+                    <p>Our team of experienced professionals and our extensive network allow us to offer a comprehensive range of services tailored to meet your specific needs. We leverage cutting-edge technology for real-time tracking and efficient operations, ensuring your peace of mind from pickup to delivery.</p>
+                    <p>At NextStep Express, customer satisfaction is our priority. We strive to be more than just a courier service; we aim to be your trusted logistics partner.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/500x350.png?text=NextStep+Team+or+Van" alt="NextStep Express Team or Van">
+                    <!-- Replace with an actual image of your team, office, or a branded van -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quote" class="quote-section">
+        <div class="container">
+            <h2>Get an Instant Quote</h2>
+            <p>Fill in the details below to get an estimated cost for your delivery.</p>
+            <form class="quote-form">
+                <div class="form-group">
+                    <label for="pickup-postcode">Collection Postcode:</label>
+                    <input type="text" id="pickup-postcode" name="pickup-postcode" placeholder="e.g., SW1A 1AA" required>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-postcode">Delivery Postcode:</label>
+                    <input type="text" id="delivery-postcode" name="delivery-postcode" placeholder="e.g., M1 1AE" required>
+                </div>
+                <div class="form-group">
+                    <label for="parcel-weight">Parcel Weight (kg):</label>
+                    <input type="number" id="parcel-weight" name="parcel-weight" placeholder="e.g., 2.5" min="0.1" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="service-type">Service Type:</label>
+                    <select id="service-type" name="service-type">
+                        <option value="sameday">Same-Day Delivery</option>
+                        <option value="nextday" selected>Next-Day Delivery</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate Quote</button>
+            </form>
+            <div id="quote-result" class="quote-result" style="display:none;">
+                <!-- Quote result will be shown here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Have questions or need to arrange a special delivery? Get in touch!</p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Our Office</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Express Lane, Suite 45<br>London, EC1V 2NX, UK</p>
+                    <p><i class="fas fa-phone"></i> +44 20 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@nextstepexpress.co.uk</p>
+                    <h3>Business Hours</h3>
+                    <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                    <p>Saturday: 9:00 AM - 1:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+                <div class="contact-form-container">
+                    <form id="contact-us-form">
+                        <div class="form-group">
+                            <label for="contact-name">Your Name:</label>
+                            <input type="text" id="contact-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Your Email:</label>
+                            <input type="email" id="contact-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subject:</label>
+                            <input type="text" id="contact-subject" name="subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Message:</label>
+                            <textarea id="contact-message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                     <div id="contact-form-response" style="display:none; margin-top:15px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> NextStep Express Courier Services Ltd. All Rights Reserved.</p>
+            <p>Designed with <i class="fas fa-heart" style="color: #ff9800;"></i> by You (via AI Assistance)</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
